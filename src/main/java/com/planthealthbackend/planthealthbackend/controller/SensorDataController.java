@@ -5,6 +5,8 @@ import com.planthealthbackend.planthealthbackend.service.SensorDataService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/sensors")
 @CrossOrigin(origins = "*")
@@ -16,22 +18,26 @@ public class SensorDataController {
         this.service = service;
     }
 
-    //Recieve sensor data
+    //Receive sensor data from ESP32
     @PostMapping
-    public ResponseEntity<SensorData> recieveSensorData(@RequestBody SensorData data) {
-        return ResponseEntity.ok((SensorData) service.getAllSensorData());
+    public ResponseEntity<SensorData> receiveSensorData(@RequestBody SensorData data){
+        SensorData savedData = service.saveSensorData(data);
+        return ResponseEntity.ok(savedData);
+    }
+    //Get all sensor readings
+    @GetMapping
+    public ResponseEntity<List<SensorData>> getAllSensorData(){
+        return ResponseEntity.ok(service.getAllSensorData());
     }
 
     //Get latest sensor reading
     @GetMapping("/latest")
-    public ResponseEntity<SensorData> getLatestSensorData() {
+    public ResponseEntity<SensorData> getLatestSensorData(){
         SensorData latest = service.getLatestSensorData();
-
-        if (latest == null){
+        if(latest == null){
             return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(latest);
     }
-
-    return ResponseEntity.ok(latest);
-}
 }
 

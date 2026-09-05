@@ -1,0 +1,18 @@
+GET http://localhost:8080/api/sensors
+###
+POST http://localhost:8080/api/sensors
+Content-Type: application/json
+
+{
+  "temperature": 28.5,
+  "humidity": 64.0,
+  "soilMoisture": 52,
+  "light": 1
+}
+### Get all sensor data
+GET http://localhost:8080/api/sensors
+
+###
+
+### Get latest sensor data
+GET http://localhost:8080/api/sensors/latest
