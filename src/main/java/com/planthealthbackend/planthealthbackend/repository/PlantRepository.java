@@ -1,4 +1,7 @@
 package com.planthealthbackend.planthealthbackend.repository;
 
-public interface PlantRepository {
+import com.planthealthbackend.planthealthbackend.model.Plant;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PlantRepository extends JpaRepository<Plant, Long> {
 }
