@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface SensorDataRepository  extends JpaRepository<SensorData, Long> {
-    SensorData findTopBySensorIdOrderByTimestampDesc();
-    List<SensorData> findAllByIdOrderByTimestampAsc();
+    SensorData findTopByOrderByTimestampDesc();
+    List<SensorData> findAllByOrderByTimestampAsc();
 }

@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "sensor_data")
 public class SensorData {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,9 +15,9 @@ public class SensorData {
 
     private Double humidity;
 
-    private Integer soilMoisture;
+    private Double soilMoisture;
 
-    private Integer light;
+    private Double lightIntensity;
 
     private LocalDateTime timestamp;
 
@@ -25,11 +25,11 @@ public class SensorData {
 
     }
 
-    public SensorData(Double temperature, Double humidity, Integer soilMoisture, LocalDateTime timestamp) {
+    public SensorData(Double temperature, Double humidity, Double soilMoisture, Double lightIntensity, LocalDateTime timestamp) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.soilMoisture = soilMoisture;
-        this.light = light;
+        this.lightIntensity = lightIntensity;
         this.timestamp = timestamp;
     }
 
@@ -37,36 +37,45 @@ public class SensorData {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Double getTemperature() {
         return temperature;
     }
 
     public void setTemperature(Double temperature) {
+
         this.temperature = temperature;
     }
 
     public Double getHumidity() {
+
         return humidity;
     }
 
     public void setHumidity(Double humidity) {
+
         this.humidity = humidity;
     }
 
-    public Integer getSoilMoisture() {
+    public Double getSoilMoisture() {
+
         return soilMoisture;
     }
 
-    public void setSoilMoisture(Integer soilMoisture) {
+    public void setSoilMoisture(Double soilMoisture) {
         this.soilMoisture = soilMoisture;
     }
 
-    public Integer getLight() {
-        return light;
+    public Double getLightIntensity() {
+        return lightIntensity;
     }
 
-    public void setLight(Integer light) {
-        this.light = light;
+    public void setLight(Double lightIntensity) {
+
+        this.lightIntensity = lightIntensity;
     }
 
     public LocalDateTime getTimestamp() {
