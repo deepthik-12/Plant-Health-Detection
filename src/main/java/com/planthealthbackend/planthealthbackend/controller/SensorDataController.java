@@ -13,6 +13,7 @@ import java.util.List;
 public class SensorDataController {
 
     private final SensorDataService service;
+    private SensorDataService sensorDataService;
 
     public SensorDataController(SensorDataService service) {
         this.service = service;
@@ -46,5 +47,9 @@ public class SensorDataController {
         }
 
         return ResponseEntity.ok(latest);
+    }
+    @GetMapping("/history")
+    public ResponseEntity<SensorDataService> getSensorDataHistory() {
+        return ResponseEntity.ok(service);
     }
 }

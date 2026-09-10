@@ -37,7 +37,6 @@ public class SensorDataService {
     }
     public List<SensorData> getSensorHistory() {
 
-        SensorDataRepository sensorDataRepository;
-        return sensorDataRepository.findAllByOrderByTimestampAsc();
+        return repository.findAll();
     }
 }
