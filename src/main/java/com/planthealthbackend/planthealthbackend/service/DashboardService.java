@@ -13,42 +13,57 @@ public class DashboardService {
         this.sensorDataRepository = sensorDataRepository;
     }
 
-    public DashboardDto getDashboardDto() {
+    public DashboardDto getDashboardData(){
         SensorData sensorData = sensorDataRepository.findTopByOrderByTimestampDesc();
         DashboardDto dashboardDto = new DashboardDto();
+
         if(sensorData != null){
+
             dashboardDto.setTemperature(sensorData.getTemperature());
             dashboardDto.setHumidity(sensorData.getHumidity());
             dashboardDto.setSoilMoisture(sensorData.getSoilMoisture());
             dashboardDto.setLightIntensity(sensorData.getLightIntensity());
-            dashboardDto.setHealthScore(calculateHealthScore(sensorData));
-            dashboardDto.setHealthStatus(getHealthStatus(calculateHealthScore(sensorData)));
+
+            Double healthScore = calculateHealthScore(sensorData);
+
+            dashboardDto.setHealthScore(healthScore);
+            dashboardDto.setHealthStatus(getHealthStatus(healthScore));
         }
         return dashboardDto;
-
     }
+    private Double calculateHealthScore(SensorData data){
+        if(data == null){
+            return 0.0;
+        }
+        double score = 100;
 
-    private Double calculateHealthScore(SensorData data) {
-        Double score = 100;
-        if(data.getTemperature()<20)||data.getTemperature()>35){
-            score -= 15;
-        }
-        if(data.getHumidity()<40||data.getHumidity()>80){
-            score -=10;
-        }
-        if(data.getSoilMoisture()<30){
+        //Temperature
+        if(data.getTemperature() != null && (data.getTemperature() < 20 || data.getTemperature() > 35)){
             score -= 20;
         }
-        if(data.getLightIntensity()<20){
+
+        //Humidity
+        if(data.getHumidity() != null && (data.getHumidity() < 40 || data.getHumidity() > 80)){
             score -= 10;
         }
-        return Math.max(score,0);
+
+        //Soil Moisture
+        if(data.getSoilMoisture() != null && (data.getSoilMoisture() < 30)){
+            score -= 20;
+        }
+
+        //Light Intensity
+        if(data.getLightIntensity() != null && (data.getLightIntensity() < 20)){
+            score -= 10;
+        }
+        return Math.max(score, 0);
     }
-    private String getHealthStatus(double score) {
-        if(score>=80){
+
+    private String getHealthStatus(Double score){
+        if(score >= 80){
             return "Healthy";
         }
-        if(score>=50){
+        if(score >= 50){
             return "Moderate";
         }
         return "Unhealthy";

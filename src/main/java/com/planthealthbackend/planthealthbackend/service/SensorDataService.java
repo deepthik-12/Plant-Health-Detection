@@ -12,25 +12,27 @@ public class SensorDataService {
 
     private final SensorDataRepository repository;
 
-    public SensorDataService(SensorDataRepository repository){
+    public SensorDataService(SensorDataRepository repository) {
         this.repository = repository;
     }
 
-    public SensorData saveSensorData(SensorData data){
+    // Save sensor data received from ESP32
+    public SensorData saveSensorData(SensorData data) {
+
         data.setTimestamp(LocalDateTime.now());
+
         return repository.save(data);
     }
 
-    public List<SensorData> getAllSensorData(){
-        return (List<SensorData>) repository.findAll();
+    // Get all sensor readings
+    public List<SensorData> getAllSensorData() {
+
+        return repository.findAll();
     }
 
-    public SensorData getLatestSensorData(){
-        List<SensorData> data = (List<SensorData>) repository.findAll();
+    // Get latest sensor reading
+    public SensorData getLatestSensorData() {
 
-        if(data.isEmpty()){
-            return null;
-        }
-        return data.get(data.size() -1);
+        return repository.findTopByOrderByTimestampDesc();
     }
 }
