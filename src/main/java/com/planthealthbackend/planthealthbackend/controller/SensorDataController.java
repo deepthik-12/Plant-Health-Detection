@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sensors")
+@RequestMapping("/sensor-data")
 @CrossOrigin(origins = "*")
 public class SensorDataController {
 
     private final SensorDataService service;
-    private SensorDataService sensorDataService;
 
     public SensorDataController(SensorDataService service) {
         this.service = service;
@@ -29,12 +28,14 @@ public class SensorDataController {
         return ResponseEntity.ok(savedData);
     }
 
+
     // Get all sensor readings
     @GetMapping
     public ResponseEntity<List<SensorData>> getAllSensorData() {
 
         return ResponseEntity.ok(service.getAllSensorData());
     }
+
 
     // Get latest sensor reading
     @GetMapping("/latest")
@@ -48,8 +49,12 @@ public class SensorDataController {
 
         return ResponseEntity.ok(latest);
     }
+
+
+    // Get sensor history for graph
     @GetMapping("/history")
-    public ResponseEntity<SensorDataService> getSensorDataHistory() {
-        return ResponseEntity.ok(service);
+    public ResponseEntity<List<SensorData>> getSensorDataHistory() {
+
+        return ResponseEntity.ok(service.getSensorDataHistory());
     }
 }
