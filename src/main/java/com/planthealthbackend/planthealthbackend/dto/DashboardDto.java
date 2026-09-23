@@ -5,6 +5,7 @@ public class DashboardDto {
     private Double humidity;
     private Double soilMoisture;
     private Double lightIntensity;
+    private String lightStatus;
     private Double healthScore;
     private String healthStatus;
 
@@ -31,6 +32,12 @@ public class DashboardDto {
     }
     public void setLightIntensity(Double lightIntensity) {
         this.lightIntensity = lightIntensity;
+    }
+    public String getLightStatus() {
+        return lightStatus;
+    }
+    public void setLightStatus(String lightStatus) {
+        this.lightStatus = lightStatus;
     }
     public Double getHealthScore() {
         return healthScore;

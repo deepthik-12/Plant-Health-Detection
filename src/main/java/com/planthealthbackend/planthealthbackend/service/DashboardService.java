@@ -23,6 +23,7 @@ public class DashboardService {
             dashboardDto.setHumidity(sensorData.getHumidity());
             dashboardDto.setSoilMoisture(sensorData.getSoilMoisture());
             dashboardDto.setLightIntensity(sensorData.getLightIntensity());
+            dashboardDto.setLightStatus(getLightStatus(sensorData.getLightIntensity()));
 
             Double healthScore = calculateHealthScore(sensorData);
 
@@ -57,6 +58,26 @@ public class DashboardService {
             score -= 10;
         }
         return Math.max(score, 0);
+    }
+    private String getLightStatus(Double lightIntensity) {
+
+        if (lightIntensity == null) {
+            return "Unknown";
+        }
+
+        if (lightIntensity < 20) {
+            return "Dark";
+        }
+
+        if (lightIntensity < 40) {
+            return "Low";
+        }
+
+        if (lightIntensity < 80) {
+            return "Good";
+        }
+
+        return "Bright";
     }
 
     private String getHealthStatus(Double score){
